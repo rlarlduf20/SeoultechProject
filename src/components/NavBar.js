@@ -1,42 +1,69 @@
 import React from "react";
 import styled from "styled-components";
 import { Link } from "react-router-dom";
+import ButtonGroup from "@material-ui/core/ButtonGroup";
+import Button from "@material-ui/core/Button";
+import Mark from "../image/seoultechMark.jpeg";
 
 const StyledNav = styled.nav`
-  width: 1250px;
+  width: 78.125rem;
   margin: 0 auto;
   height: 100%;
   display: flex;
+  position: relative;
   align-items: center;
 `;
-const StyledLi = styled.li`
-  display: inline-block;
-  font-size: 24px;
-  &:hover {
-    color: green;
+const StyledButtonGroup = styled(ButtonGroup)`
+  position: absolute;
+  right: 0;
+`;
+const StyledLink = styled(Link)`
+  text-decoration: none;
+  color: black;
+  img {
+    width: 1.5625rem;
+    height: 1.5625rem;
+    display: inline-block;
+    margin-right: 0.3125rem;
   }
-  & + & {
-    margin-left: 100px;
+  .home_button {
+    display: inline-block;
+    font-weight: bold;
+    font-size: 1.1875rem;
+  }
+  .data_button {
+    font-size: 1.1875rem;
   }
 `;
 
 const NavBar = () => {
   return (
     <StyledNav>
-      <ul>
-        <StyledLi>
-          <Link to="/user">Home</Link>
-        </StyledLi>
-        <StyledLi>
-          <Link to="/data">Data</Link>
-        </StyledLi>
-        <StyledLi>
-          <Link to="/user/login">로그인</Link>
-        </StyledLi>
-        <StyledLi>
-          <Link to="/user/registration">회원가입</Link>
-        </StyledLi>
-      </ul>
+      <StyledLink to="/user">
+        <img src={Mark} alt="마크" />
+        <p className="home_button">
+          환경서비스
+          <br />
+          플랫폼
+        </p>
+      </StyledLink>
+
+      <StyledLink to="/data" style={{ position: "absolute", right: 250 }}>
+        <p className="data_button">Data</p>
+      </StyledLink>
+
+      <StyledButtonGroup
+        variant="text"
+        aria-label="text button group"
+        className="button_group"
+      >
+        <Button style={{ fontSize: "0.75rem" }}>
+          <StyledLink to="/user/login">로그인</StyledLink>
+        </Button>
+        <Button style={{ fontSize: "0.75rem" }}>
+          <StyledLink to="/user/registration">회원가입</StyledLink>
+        </Button>
+      </StyledButtonGroup>
     </StyledNav>
   );
 };

@@ -4,15 +4,17 @@ import Home from "./pages/Home";
 import Data from "./pages/Data";
 import Signin from "./pages/Signin";
 import Register from "./pages/Register";
-
+import Layout from "./pages/Layout";
 const App = () => {
   return (
     <Router>
       <Routes>
-        <Route path="/user" element={<Home />} />
-        <Route path="/data" element={<Data />} />
-        <Route path="/user/login" element={<Signin />} />
-        <Route path="/user/registration" element={<Register />} />
+        <Route element={<Layout />}>
+          <Route path="/user" element={<Home />} />
+          <Route path="/data" element={<Data />} />
+          <Route path="/user/login" element={<Signin />} />
+          <Route path="/user/registration" element={<Register />} />
+        </Route>
       </Routes>
     </Router>
   );
