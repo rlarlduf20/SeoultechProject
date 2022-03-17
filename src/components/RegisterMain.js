@@ -22,7 +22,7 @@ const StyledRegisterText = styled.div`
 const StyledRegisterBox = styled.div`
   width: 54.6875rem;
   padding: 6.25rem;
-  height: 36.25rem;
+  height: 43.75rem;
   background: white;
   border: 0.0625rem solid #dcdcdc;
   & label {
@@ -57,7 +57,7 @@ const StyledRegisterBox = styled.div`
     }
   }
   & .pw_input {
-    margin-bottom: 36px;
+    margin-bottom: 2.25rem;
     & .pw_input2 {
       display: inline-block;
       margin-right: 4.375rem;
@@ -67,7 +67,7 @@ const StyledRegisterBox = styled.div`
     }
   }
   & .name_input {
-    margin-bottom: 36px;
+    margin-bottom: 2.25rem;
     & .lastname_input {
       display: inline-block;
       margin-right: 4.375rem;
@@ -77,7 +77,7 @@ const StyledRegisterBox = styled.div`
     }
   }
   & .phone_input {
-    margin-bottom: 36px;
+    margin-bottom: 2.25rem;
     & .phone_input2 {
       display: inline-block;
       margin-right: 0.75rem;
@@ -90,12 +90,28 @@ const StyledRegisterBox = styled.div`
     }
   }
   & .home_input {
+    margin-bottom: 4rem;
     & .city_input {
       display: inline-block;
       margin-right: 70px;
     }
     & .adress_input {
       display: inline-block;
+    }
+  }
+  & .submit {
+    border: 0.125rem solid green;
+    color: green;
+    background: white;
+    font-weight: bold;
+    font-size: 1rem;
+    padding: 1.5rem 0.875rem 1.5rem 0.875rem;
+    width: 50%;
+    &:hover {
+      color: white;
+      cursor: pointer;
+      background: #8fbc8f;
+      border: 0.125rem solid white;
     }
   }
 `;
@@ -188,6 +204,9 @@ const RegisterMain = () => {
                 <label for="adress">주소</label>
                 <input placeholder="주소 *" id="adress" />
               </div>
+            </div>
+            <div style={{ display: "flex", justifyContent: "center" }}>
+              <button className="submit">등록하기</button>
             </div>
           </StyledRegisterBox>
         </div>

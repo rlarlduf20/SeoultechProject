@@ -32,7 +32,6 @@ const StyledSigninBox = styled.div`
   }
   & .signin_button {
     border: 0.125rem solid green;
-    // border-radius: 3.125rem;
     color: green;
     background: white;
     font-weight: bold;
