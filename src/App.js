@@ -4,7 +4,7 @@ import Home from "./pages/Home";
 import Data from "./pages/Data";
 import Signin from "./pages/Signin";
 import Register from "./pages/Register";
-import Layout from "./pages/Layout";
+import Layout from "./components/public/layout/Layout";
 const App = () => {
   return (
     <Router>

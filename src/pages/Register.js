@@ -1,14 +1,8 @@
 import React from "react";
-import RegisterMain from "../components/RegisterMain";
-import Footer from "../components/Footer";
+import RegisterMain from "../components/main/register/RegisterMain";
 
 const Register = () => {
-  return (
-    <>
-      <RegisterMain />
-      <Footer />
-    </>
-  );
+  return <RegisterMain />;
 };
 
 export default Register;

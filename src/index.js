@@ -1,7 +1,7 @@
 import React from "react";
 import ReactDOM from "react-dom";
-// import "@fontsource/noto-sans-kr";
-import "@fontsource/noto-serif-kr";
+import "@fontsource/noto-sans-kr";
+// import "@fontsource/noto-serif-kr";
 import "./index.css";
 import App from "./App";
 import reportWebVitals from "./reportWebVitals";

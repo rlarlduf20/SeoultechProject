@@ -1,6 +1,6 @@
 import React from "react";
-import styled from "styled-components";
 import { Link } from "react-router-dom";
+import styled from "styled-components";
 
 const StyledSigninBox = styled.div`
   position: relative;
@@ -50,24 +50,21 @@ const StyledSigninBox = styled.div`
   }
 `;
 
-const SignInMain = () => {
+const SigninBox = () => {
   return (
-    <main style={{ display: "flex", justifyContent: "center" }}>
-      <StyledSigninBox>
-        <p className="signin_text">로그인</p>
-        <input placeholder="이메일" className="input_email" />
-        <input placeholder="비밀번호" className="input_pw" />
-        <button className="signin_button">로그인</button>
-        <p className="to_registration">
-          처음 방문하셨나요?{" "}
-          <Link to="/user/registration" style={{ color: "green" }}>
-            신규등록
-          </Link>
-        </p>
-      </StyledSigninBox>
-      ;
-    </main>
+    <StyledSigninBox>
+      <p className="signin_text">로그인</p>
+      <input placeholder="이메일" className="input_email" />
+      <input placeholder="비밀번호" className="input_pw" />
+      <button className="signin_button">로그인</button>
+      <p className="to_registration">
+        처음 방문하셨나요?{" "}
+        <Link to="/user/registration" style={{ color: "green" }}>
+          신규등록
+        </Link>
+      </p>
+    </StyledSigninBox>
   );
 };
 
-export default SignInMain;
+export default SigninBox;

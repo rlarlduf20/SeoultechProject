@@ -3,7 +3,7 @@ import NavBar from "./NavBar";
 
 const Header = () => {
   return (
-    <div
+    <header
       style={{
         position: "fixed",
         top: 0,
@@ -17,7 +17,7 @@ const Header = () => {
       }}
     >
       <NavBar />
-    </div>
+    </header>
   );
 };
 

@@ -1,11 +1,11 @@
 import React, { useEffect, useState } from "react";
 import styled, { keyframes } from "styled-components";
-import MainImage from "../image/envl.png";
-import SubImage1 from "../image/envp.png";
-import SubImage2 from "../image/s.jpg";
+import MainImage from "../../image/envl.png";
+import SubImage1 from "../../image/envp.png";
+import SubImage2 from "../../image/s.jpg";
 import { Link } from "react-router-dom";
 
-const StyledMainBox = styled.div`
+const StyledMainBox = styled.main`
   position: relative;
   margin-top: 5.9375rem;
   background: #f2f2f2;
@@ -14,6 +14,7 @@ const StyledMainBox = styled.div`
     width: 100%;
     height: 31.25rem;
     opacity: 0.85;
+    overflow: hidden;
   }
 `;
 const StyledInnerBox = styled.div`
@@ -63,10 +64,10 @@ const StyledMainText = styled.div`
   position: absolute;
   top: 6.5625rem;
   right: 31.25rem;
-  & p {
+  & .maintext {
     font-size: 1.75rem;
     text-align: right;
-    line-height: 2rem;
+    line-height: 2.5rem;
     letter-spacing: 2px;
     animation: ${appearText} 1.5s;
   }
@@ -126,12 +127,12 @@ const Main = () => {
       <img className="main_image" src={MainImage} alt="메인이미지" />
       <StyledMainText>
         {isTextLoading ? (
-          <p>
+          <p className="maintext">
             이 땅은 모든 사람의 필요를 <br />
             충족시키기에 충분하지만
             <br /> 모든 사람의 욕심을 충족시키지는 못합니다.
             <br />
-            -Mahatma Gandhi
+            <p style={{ fontSize: "1.25rem" }}>-Mahatma Gandhi</p>
           </p>
         ) : null}
         {isButtonLoading ? (

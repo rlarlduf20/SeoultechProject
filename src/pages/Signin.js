@@ -1,14 +1,8 @@
 import React from "react";
-import SigninMain from "../components/SigninMain";
-import Footer from "../components/Footer";
+import SigninMain from "../components/main/signin/SigninMain";
 
 const Signin = () => {
-  return (
-    <>
-      <SigninMain />
-      <Footer />
-    </>
-  );
+  return <SigninMain />;
 };
 
 export default Signin;
