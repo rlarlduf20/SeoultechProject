@@ -2,7 +2,8 @@ import React from "react";
 import MyButton from "../../public/common/MyButton";
 import MyInput from "../../public/common/MyInput";
 import styled from "styled-components";
-import useInputValue from "../../../hooks/useInputValue";
+import useRegisterInput from "../../../hooks/register/useRegisterInput";
+import MyTimer from "../../public/common/MyTimer";
 
 const StyledForm = styled.form`
   width: 54.6875rem;
@@ -18,6 +19,27 @@ const StyledForm = styled.form`
   }
   .email_button {
     grid-column: 3/4;
+    height: 3.4375rem;
+    width: 6.875rem;
+    border: 0.125rem solid green;
+    border-color: green;
+    color: green;
+    background: white;
+    font-weight: bold;
+    font-size: 1rem;
+    &:hover {
+      cursor: pointer;
+      color: white;
+      background: #8fbc8f;
+      border: 0.125rem solid white;
+    }
+  }
+  .code_input {
+    grid-column: 3/4;
+    height: 3.4375rem;
+  }
+  .code_submit {
+    grid-column: 4/5;
     height: 3.4375rem;
     width: 6.875rem;
   }
@@ -85,7 +107,9 @@ const StyledRadio = styled.input`
 `;
 
 const RegisterBox = () => {
-  const { inputs, onChange, onSubmit } = useInputValue();
+  const { inputs, onChange, onSubmit, emailClick, emailSuccess } =
+    useRegisterInput();
+
   const {
     email,
     password,
@@ -108,7 +132,19 @@ const RegisterBox = () => {
         className="email"
         value={email}
       />
-      <MyButton className="email_button">이메일 발송</MyButton>
+      {emailSuccess ? (
+        <>
+          <MyInput label="코드입력 * " className="code_input" />
+          <MyTimer className="code_submit" active={emailSuccess} />
+        </>
+      ) : (
+        <input
+          type="button"
+          className="email_button"
+          value="이메일 발송"
+          onClick={emailClick}
+        />
+      )}
       <MyInput
         label="비밀번호 *"
         onChange={onChange}

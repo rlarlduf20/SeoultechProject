@@ -1,4 +1,7 @@
 import { useState } from "react";
+import axios from "axios";
+import { useDispatch, useSelector } from "react-redux";
+import { isEmailSuccess, isEmailFail } from "../../redux/email";
 
 const useInputValue = () => {
   const [inputs, setInputs] = useState({
@@ -12,6 +15,8 @@ const useInputValue = () => {
     city: "",
     address: "",
   });
+  const dispatch = useDispatch();
+  const emailSuccess = useSelector((state) => state.email);
 
   const {
     email,
@@ -31,6 +36,20 @@ const useInputValue = () => {
       ...inputs,
       [name]: value,
     });
+  };
+
+  const emailClick = async () => {
+    const req = await axios
+      .post(`http://localhost:8000/auth/send-auth-mail`, {
+        email: email,
+      })
+      .then((res) => res.status)
+      .catch((err) => err.status);
+
+    if (req === 200 || req === 204) {
+      alert("이메일코드 전송완료");
+      dispatch(isEmailSuccess());
+    } else if (req === undefined) alert("유효한 이메일을 입력하세요");
   };
 
   const onSubmit = (e) => {
@@ -63,8 +82,9 @@ const useInputValue = () => {
     };
     console.log(body);
     alert("등록 완료");
+    dispatch(isEmailFail());
   };
-  return { inputs, onChange, onSubmit };
+  return { inputs, onChange, onSubmit, emailClick, emailSuccess };
 };
 
 export default useInputValue;
