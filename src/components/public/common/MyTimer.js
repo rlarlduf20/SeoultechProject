@@ -1,17 +1,19 @@
 import { useEffect, useState } from "react";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import MyButton from "./MyButton";
 import { isEmailFail } from "../../../redux/email";
 
-const MyTimer = ({ active, className }) => {
+const MyTimer = ({ active, className, onClick }) => {
   const [min, setMin] = useState(3);
   const [sec, setSec] = useState(0);
   const dispatch = useDispatch();
+  const checkCode = useSelector((state) => state.code);
 
   useEffect(() => {
     let timer;
-    if (active) {
+    if (active && !checkCode) {
       timer = setInterval(() => {
+        if (checkCode) clearInterval(timer);
         if (Number(sec) > 0) {
           setSec(Number(sec) - 1);
         }
@@ -28,11 +30,18 @@ const MyTimer = ({ active, className }) => {
       }, 1000);
     }
     return () => clearInterval(timer);
-  }, [min, sec, active]);
+  }, [min, sec, active, checkCode]);
   return (
-    <MyButton className={className}>
-      {min}:{sec < 10 ? `0${sec}` : sec}
-    </MyButton>
+    <>
+      {checkCode ? null : (
+        <input
+          type="button"
+          className={className}
+          onClick={onClick}
+          value={`${min}:${sec < 10 ? `0${sec}` : sec}`}
+        />
+      )}
+    </>
   );
 };
 

@@ -9,7 +9,15 @@ const StyledTextField = styled(TextField)({
   },
 });
 
-const MyInput = ({ label, onChange, name, type, className, value }) => {
+const MyInput = ({
+  label,
+  onChange,
+  name,
+  type,
+  className,
+  value,
+  disabled,
+}) => {
   return (
     <StyledTextField
       variant="outlined"
@@ -19,6 +27,7 @@ const MyInput = ({ label, onChange, name, type, className, value }) => {
       name={name}
       className={className}
       value={value}
+      disabled={disabled}
     />
   );
 };

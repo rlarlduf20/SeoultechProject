@@ -1,9 +1,12 @@
-import React from "react";
+import React, { useEffect } from "react";
 import MyButton from "../../public/common/MyButton";
 import MyInput from "../../public/common/MyInput";
 import styled from "styled-components";
 import useRegisterInput from "../../../hooks/register/useRegisterInput";
 import MyTimer from "../../public/common/MyTimer";
+import { useSelector } from "react-redux";
+import { useNavigate } from "react-router-dom";
+import useAuth from "../../../hooks/useAuth";
 
 const StyledForm = styled.form`
   width: 54.6875rem;
@@ -42,6 +45,18 @@ const StyledForm = styled.form`
     grid-column: 4/5;
     height: 3.4375rem;
     width: 6.875rem;
+    border: 0.125rem solid green;
+    border-color: green;
+    color: green;
+    background: white;
+    font-weight: bold;
+    font-size: 1rem;
+    &:hover {
+      cursor: pointer;
+      color: white;
+      background: #8fbc8f;
+      border: 0.125rem solid white;
+    }
   }
   .password {
     grid-row: 2;
@@ -107,9 +122,17 @@ const StyledRadio = styled.input`
 `;
 
 const RegisterBox = () => {
-  const { inputs, onChange, onSubmit, emailClick, emailSuccess } =
-    useRegisterInput();
-
+  const {
+    inputs,
+    onChange,
+    onSubmit,
+    emailClick,
+    emailSuccess,
+    codeSubmitButton,
+    checkCode,
+    operate,
+  } = useRegisterInput();
+  const user = useSelector((state) => state.user);
   const {
     email,
     password,
@@ -121,7 +144,13 @@ const RegisterBox = () => {
     city,
     address,
   } = inputs;
-
+  const navigate = useNavigate();
+  const { isLogin } = useAuth();
+  useEffect(() => {
+    if (isLogin) {
+      navigate("/user");
+    }
+  }, [isLogin]);
   return (
     <StyledForm onSubmit={onSubmit}>
       <MyInput
@@ -134,16 +163,37 @@ const RegisterBox = () => {
       />
       {emailSuccess ? (
         <>
-          <MyInput label="코드입력 * " className="code_input" />
-          <MyTimer className="code_submit" active={emailSuccess} />
+          <MyInput
+            label="코드입력 * "
+            className="code_input"
+            onChange={onChange}
+            name="code"
+            disabled={checkCode}
+          />
+          <MyTimer
+            className="code_submit"
+            active={emailSuccess}
+            onClick={codeSubmitButton}
+          />
         </>
       ) : (
-        <input
-          type="button"
-          className="email_button"
-          value="이메일 발송"
-          onClick={emailClick}
-        />
+        <>
+          {operate ? (
+            <input
+              type="button"
+              className="email_button"
+              value="..."
+              disabled
+            />
+          ) : (
+            <input
+              type="button"
+              className="email_button"
+              value="이메일 발송"
+              onClick={emailClick}
+            />
+          )}
+        </>
       )}
       <MyInput
         label="비밀번호 *"

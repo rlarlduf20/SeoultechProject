@@ -11,6 +11,7 @@ import Popper from "@material-ui/core/Popper";
 import MenuItem from "@material-ui/core/MenuItem";
 import MenuList from "@material-ui/core/MenuList";
 import Avatar from "@material-ui/core/Avatar";
+import useAuth from "../../../hooks/useAuth";
 
 const StyledNav = styled.nav`
   width: 78.125rem;
@@ -42,6 +43,10 @@ const StyledLink = styled(Link)`
     font-size: 1.1875rem;
   }
 `;
+const MyPageLink = styled(Link)`
+  text-decoration: none;
+  color: black;
+`;
 // const StyledAvatar = styled(Avatar)`
 //   position: absolute;
 //   right: 0;
@@ -59,6 +64,7 @@ const NavBar = () => {
   const handleToggle = () => {
     setOpen((prevOpen) => !prevOpen);
   };
+  const { isLogin, onClickSignout } = useAuth();
 
   const handleClose = (event) => {
     if (anchorRef.current && anchorRef.current.contains(event.target)) {
@@ -85,92 +91,96 @@ const NavBar = () => {
   }, [open]);
   return (
     <>
-      <StyledNav>
-        <StyledLink to="/user">
-          <img src={Mark} alt="마크" />
-          <p className="home_button">
-            환경서비스
-            <br />
-            플랫폼
-          </p>
-        </StyledLink>
+      {isLogin ? (
+        <StyledNav>
+          <StyledLink to="/user">
+            <img src={Mark} alt="마크" />
+            <p className="home_button">
+              환경서비스
+              <br /> 플랫폼
+            </p>
+          </StyledLink>
 
-        <StyledLink to="/data" style={{ position: "absolute", right: 250 }}>
-          <p className="data_button">Data</p>
-        </StyledLink>
+          <StyledLink to="/data" style={{ position: "absolute", right: 250 }}>
+            <p className="data_button">Data</p>
+          </StyledLink>
 
-        <StyledButtonGroup
-          variant="text"
-          aria-label="text button group"
-          className="button_group"
-        >
-          <Button style={{ fontSize: "0.75rem" }}>
-            <StyledLink to="/user/login">로그인</StyledLink>
-          </Button>
-          <Button style={{ fontSize: "0.75rem" }}>
-            <StyledLink to="/user/registration">회원가입</StyledLink>
-          </Button>
-        </StyledButtonGroup>
-      </StyledNav>
+          <div style={{ position: "absolute", right: 0 }}>
+            <Button
+              ref={anchorRef}
+              id="composition-button"
+              aria-controls={open ? "composition-menu" : undefined}
+              aria-expanded={open ? "true" : undefined}
+              aria-haspopup="true"
+              onClick={handleToggle}
+            >
+              <Avatar src="/broken-image.jpg" />
+            </Button>
+            <Popper
+              open={open}
+              anchorEl={anchorRef.current}
+              role={undefined}
+              placement="bottom-start"
+              transition
+              disablePortal
+            >
+              {({ TransitionProps, placement }) => (
+                <Grow
+                  {...TransitionProps}
+                  style={{
+                    transformOrigin:
+                      placement === "bottom-start" ? "left top" : "left bottom",
+                  }}
+                >
+                  <Paper>
+                    <ClickAwayListener onClickAway={handleClose}>
+                      <MenuList
+                        autoFocusItem={open}
+                        id="composition-menu"
+                        aria-labelledby="composition-button"
+                        onKeyDown={handleListKeyDown}
+                      >
+                        <MyPageLink to="/user/my">
+                          <MenuItem onClick={handleClose}>마이페이지</MenuItem>
+                        </MyPageLink>
+                        <MenuItem onClick={onClickSignout}>로그아웃</MenuItem>
+                      </MenuList>
+                    </ClickAwayListener>
+                  </Paper>
+                </Grow>
+              )}
+            </Popper>
+          </div>
+        </StyledNav>
+      ) : (
+        <StyledNav>
+          <StyledLink to="/user">
+            <img src={Mark} alt="마크" />
+            <p className="home_button">
+              환경서비스
+              <br />
+              플랫폼
+            </p>
+          </StyledLink>
 
-      {/* <StyledNav>
-        <StyledLink to="/user">
-          <img src={Mark} alt="마크" />
-          <p className="home_button">
-            환경서비스
-            <br /> 플랫폼
-          </p>
-        </StyledLink>
+          <StyledLink to="/data" style={{ position: "absolute", right: 250 }}>
+            <p className="data_button">Data</p>
+          </StyledLink>
 
-        <StyledLink to="/data" style={{ position: "absolute", right: 250 }}>
-          <p className="data_button">Data</p>
-        </StyledLink>
-
-        <div style={{ position: "absolute", right: 0 }}>
-          <Button
-            ref={anchorRef}
-            id="composition-button"
-            aria-controls={open ? "composition-menu" : undefined}
-            aria-expanded={open ? "true" : undefined}
-            aria-haspopup="true"
-            onClick={handleToggle}
+          <StyledButtonGroup
+            variant="text"
+            aria-label="text button group"
+            className="button_group"
           >
-            <Avatar src="/broken-image.jpg" />
-          </Button>
-          <Popper
-            open={open}
-            anchorEl={anchorRef.current}
-            role={undefined}
-            placement="bottom-start"
-            transition
-            disablePortal
-          >
-            {({ TransitionProps, placement }) => (
-              <Grow
-                {...TransitionProps}
-                style={{
-                  transformOrigin:
-                    placement === "bottom-start" ? "left top" : "left bottom",
-                }}
-              >
-                <Paper>
-                  <ClickAwayListener onClickAway={handleClose}>
-                    <MenuList
-                      autoFocusItem={open}
-                      id="composition-menu"
-                      aria-labelledby="composition-button"
-                      onKeyDown={handleListKeyDown}
-                    >
-                      <MenuItem onClick={handleClose}>마이페이지</MenuItem>
-                      <MenuItem onClick={handleClose}>로그아웃</MenuItem>
-                    </MenuList>
-                  </ClickAwayListener>
-                </Paper>
-              </Grow>
-            )}
-          </Popper>
-        </div>
-      </StyledNav> */}
+            <Button style={{ fontSize: "0.75rem" }}>
+              <StyledLink to="/user/login">로그인</StyledLink>
+            </Button>
+            <Button style={{ fontSize: "0.75rem" }}>
+              <StyledLink to="/user/registration">회원가입</StyledLink>
+            </Button>
+          </StyledButtonGroup>
+        </StyledNav>
+      )}
     </>
   );
 };

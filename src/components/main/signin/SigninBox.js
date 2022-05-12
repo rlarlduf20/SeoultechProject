@@ -1,8 +1,12 @@
-import React from "react";
-import { Link } from "react-router-dom";
+import React, { useEffect } from "react";
+import { Link, Navigate } from "react-router-dom";
 import styled from "styled-components";
+import useSigninInput from "../../../hooks/signin/useSigninInput";
+import MyInput from "../../public/common/MyInput";
+import useAuth from "../../../hooks/useAuth";
+import { useNavigate } from "react-router-dom";
 
-const StyledSigninBox = styled.div`
+const StyledSigninBox = styled.form`
   position: relative;
   display: flex;
   align-items: center;
@@ -19,16 +23,12 @@ const StyledSigninBox = styled.div`
     margin-bottom: 3rem;
   }
   & .input_email {
-    display: block;
     width: 75%;
-    padding: 1.5rem 0 1.5rem 1.75rem;
-    margin-bottom: 1.25rem;
+    margin-bottom: 1.5rem;
   }
   & .input_pw {
-    display: block;
     width: 75%;
-    padding: 1.5rem 0 1.5rem 1.75rem;
-    margin-bottom: 1.25rem;
+    margin-bottom: 1.5rem;
   }
   & .signin_button {
     border: 0.125rem solid green;
@@ -37,7 +37,7 @@ const StyledSigninBox = styled.div`
     font-weight: bold;
     font-size: 1rem;
     padding: 1.5rem 0.875rem 1.5rem 0.875rem;
-    width: 81%;
+    width: 75%;
   }
   & .signin_button:hover {
     color: white;
@@ -51,12 +51,37 @@ const StyledSigninBox = styled.div`
 `;
 
 const SigninBox = () => {
+  const { inputs, onChange, onSubmit } = useSigninInput();
+  const { email, password } = inputs;
+  const { isLogin } = useAuth();
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    if (isLogin) {
+      navigate("/user");
+    }
+  }, [isLogin]);
   return (
-    <StyledSigninBox>
+    <StyledSigninBox onSubmit={onSubmit}>
       <p className="signin_text">로그인</p>
-      <input placeholder="이메일" className="input_email" />
-      <input placeholder="비밀번호" className="input_pw" />
+      <MyInput
+        label="이메일"
+        className="input_email"
+        type="email"
+        onChange={onChange}
+        name="email"
+        value={email}
+      />
+      <MyInput
+        label="비밀번호"
+        className="input_pw"
+        type="password"
+        onChange={onChange}
+        name="password"
+        value={password}
+      />
       <button className="signin_button">로그인</button>
+
       <p className="to_registration">
         처음 방문하셨나요?{" "}
         <Link to="/user/registration" style={{ color: "green" }}>
